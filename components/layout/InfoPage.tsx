@@ -1,0 +1,123 @@
+import { Nav } from '@/components/layout/Nav';
+import { BackBar } from '@/components/layout/BackBar';
+import { Footer } from '@/components/layout/Footer';
+import { Reveal, RevealGroup } from '@/components/motion/Reveal';
+import { ClipReveal } from '@/components/journey/ClipReveal';
+import { WaveBridge } from '@/components/journey/WaveBridge';
+
+export interface InfoSection {
+  heading: string;
+  body: string[];
+}
+
+interface InfoPageProps {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  sections: InfoSection[];
+}
+
+/** Shared layout for legal / policy / trust pages — calm, readable, real text. */
+export function InfoPage({ eyebrow, title, intro, sections }: InfoPageProps) {
+  // First character becomes a large faint ghost behind the title block.
+  const ghost = title.charAt(0);
+
+  return (
+    <>
+      <Nav />
+      <BackBar fallbackHref="/" />
+      <main
+        id="main-content"
+        className="flex-1 pb-24 md:pb-12"
+        style={{ background: 'var(--color-bg)' }}
+      >
+        {/*
+          Aurora header band — a radial azure tint at low opacity.
+          overflow-hidden clips the ghost glyph that overflows the box.
+          Text sits on z-1 above the z-0 ghost so legibility is unaffected.
+        */}
+        <div
+          className="relative overflow-hidden pt-16 md:pt-20"
+          style={{
+            background:
+              'radial-gradient(ellipse 90% 120% at 50% -10%, rgba(46,107,255,0.07) 0%, transparent 65%)',
+          }}
+        >
+          {/* Ghost glyph — purely decorative, aria-hidden, never interactive */}
+          <span
+            aria-hidden="true"
+            className="pointer-events-none select-none absolute inset-0 flex items-center justify-center font-display leading-none"
+            style={{
+              fontSize: 'clamp(9rem, 32vw, 22rem)',
+              color: 'var(--color-ink)',
+              opacity: 0.06,
+              zIndex: 0,
+            }}
+          >
+            {ghost}
+          </span>
+
+          {/* Header content — sits above ghost via z-[1] */}
+          <div className="relative max-w-3xl mx-auto px-6 pb-12" style={{ zIndex: 1 }}>
+            <RevealGroup>
+              <Reveal delay={0}>
+                <p className="label-eyebrow mb-4" style={{ color: 'var(--color-azure)' }}>
+                  {eyebrow}
+                </p>
+              </Reveal>
+              <ClipReveal
+                as="h1"
+                text={title}
+                className="font-display text-h1 leading-tight tracking-tight mb-5"
+                style={{ color: 'var(--color-ink)' }}
+              />
+              <Reveal delay={0.16}>
+                <p className="text-lead mb-2 max-w-2xl" style={{ color: 'var(--color-ink-muted)' }}>
+                  {intro}
+                </p>
+              </Reveal>
+            </RevealGroup>
+          </div>
+        </div>
+
+        {/* Sections */}
+        <div className="max-w-3xl mx-auto px-6 pt-4">
+          <div className="flex flex-col gap-10">
+            {sections.map((s, i) => (
+              <Reveal key={s.heading} delay={i * 0.06}>
+                <section>
+                  <h2
+                    className="font-display text-h3 tracking-tight mb-3"
+                    style={{ color: 'var(--color-ink)' }}
+                  >
+                    {s.heading}
+                  </h2>
+                  {s.body.map((p, j) => (
+                    <p
+                      key={j}
+                      className="font-sans text-base leading-relaxed mb-3"
+                      style={{ color: 'var(--color-ink-muted)' }}
+                    >
+                      {p}
+                    </p>
+                  ))}
+                </section>
+              </Reveal>
+            ))}
+          </div>
+          <p className="font-sans text-xs mt-16 mb-8" style={{ color: 'rgba(20,26,46,0.4)' }}>
+            Last updated June 2026 · Companio Technologies Pvt. Ltd. · This is a product
+            demonstration; policies shown are illustrative.
+          </p>
+        </div>
+      </main>
+      {/* Seam from page bg → footer dark panel */}
+      <WaveBridge
+        fill="var(--color-ink-dark-panel)"
+        base="var(--color-bg)"
+        height={72}
+      />
+      <Footer />
+    </>
+  );
+}

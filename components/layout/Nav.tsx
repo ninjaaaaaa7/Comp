@@ -1,0 +1,151 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Home, Compass, Newspaper, User, LayoutDashboard, MessageCircle } from "lucide-react";
+import { Seal } from "@/components/ui/Seal";
+import { NavUser } from "@/components/layout/NavUser";
+import { getUser } from "@/lib/journeyState";
+import { cn } from "@/lib/utils";
+
+interface NavProps {
+  heroMode?: boolean;
+}
+
+const NAV_LINKS = [
+  { href: "/explore",      label: "Explore" },
+  { href: "/feed",         label: "Feed" },
+  { href: "/lounge",       label: "Lounge" },
+  { href: "/how-it-works", label: "How it works" },
+  { href: "/safety",       label: "Safety" },
+];
+
+// 4 fixed tabs + 1 dynamic You tab = 5 total.
+// "How it works" and "Earn" moved to desktop NAV_LINKS + footer only.
+const TABS = [
+  { href: "/",        label: "Home",    Icon: Home },
+  { href: "/explore", label: "Explore", Icon: Compass },
+  { href: "/feed",    label: "Feed",    Icon: Newspaper },
+  { href: "/lounge",  label: "Lounge",  Icon: MessageCircle },
+];
+
+export function Nav({ heroMode = false }: NavProps) {
+  const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+  const [signedIn, setSignedIn] = useState(false);
+
+  // Hydration-safe: localStorage read deferred to mount.
+  useEffect(() => {
+    setSignedIn(getUser() !== null);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!heroMode) return;
+    const onScroll = () => setScrolled(window.scrollY > 56);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [heroMode]);
+
+  const transparent = heroMode && !scrolled;
+
+  return (
+    <>
+      <header
+        className={cn(
+          "sticky top-0 z-50 transition-all duration-300",
+          transparent
+            ? "bg-transparent border-b border-transparent shadow-none"
+            : "border-b"
+        )}
+        style={
+          transparent
+            ? { borderBottomColor: "transparent" }
+            : {
+                // Near-opaque solid + light blur — much cheaper to composite
+                // while scrolling than the previous blur(16px).
+                background: "rgba(251,252,255,0.96)",
+                backdropFilter: "blur(6px)",
+                borderBottomColor: "rgba(46,107,255,0.12)",
+                boxShadow: "var(--shadow-1)",
+              }
+        }
+        role="banner"
+      >
+        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center gap-8">
+          <Link
+            href="/"
+            className="flex items-center gap-2.5 shrink-0 rounded-sm focus-visible:outline-azure"
+            aria-label="Companio home"
+          >
+            <Seal size={32} decorative />
+            <span className="font-display text-xl font-semibold tracking-tight" style={{ color: "var(--color-ink)" }}>
+              Companio
+            </span>
+          </Link>
+
+          <nav
+            aria-label="Main navigation"
+            className="hidden md:flex items-center gap-8 flex-1 justify-center"
+          >
+            {NAV_LINKS.map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className={cn(
+                  "text-sm font-sans font-semibold transition-colors rounded-sm focus-visible:outline-azure",
+                  pathname === href ? "text-azure" : "text-ink-muted hover:text-ink"
+                )}
+                aria-current={pathname === href ? "page" : undefined}
+              >
+                {label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="hidden md:flex items-center gap-3 ml-auto shrink-0">
+            <NavUser />
+          </div>
+        </div>
+      </header>
+
+      {/* Mobile bottom tab bar */}
+      <nav
+        aria-label="Mobile navigation"
+        className="md:hidden fixed bottom-0 left-0 right-0 z-50 border-t"
+        style={{
+          background: "rgba(251,252,255,0.97)",
+          backdropFilter: "blur(6px)",
+          borderTopColor: "rgba(20,26,46,0.1)",
+          boxShadow: "0 -2px 12px rgba(20,26,46,0.08)",
+        }}
+      >
+        <div className="flex">
+          {[...TABS, signedIn
+            ? { href: "/dashboard", label: "You", Icon: LayoutDashboard }
+            : { href: "/login", label: "Sign in", Icon: User },
+          ].map(({ href, label, Icon }) => {
+            const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
+            return (
+              <Link
+                key={href}
+                href={href}
+                aria-current={active ? "page" : undefined}
+                className={cn(
+                  "flex flex-1 flex-col items-center justify-center gap-1",
+                  "py-3 min-h-[56px] text-xs font-sans font-semibold transition-colors",
+                  "focus-visible:outline-azure"
+                )}
+                style={{ color: active ? "var(--color-azure)" : "var(--color-ink-muted)" }}
+              >
+                <Icon size={22} strokeWidth={active ? 2 : 1.5} aria-hidden="true" />
+                <span>{label}</span>
+              </Link>
+            );
+          })}
+        </div>
+      </nav>
+    </>
+  );
+}

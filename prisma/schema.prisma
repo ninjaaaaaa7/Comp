@@ -1,0 +1,324 @@
+// Companio — Postgres data model (Neon).
+// THIS FILE IS NOT COMPILED BY NEXT.JS. It is safe to add before running
+// `prisma migrate dev`. No npm package needed until you intentionally install
+// prisma + @prisma/client.
+//
+// Run order when ready:
+//   1. npm i prisma @prisma/client
+//   2. Set DATABASE_URL + DIRECT_URL in .env
+//   3. npx prisma migrate dev --name init
+//   4. npx prisma db seed  (seed from lib/data/companions.ts)
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")   // pooled connection (PgBouncer / Neon pooler)
+  directUrl = env("DIRECT_URL")     // direct connection needed for migrations
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ── Enums ─────────────────────────────────────────────────────────────────────
+
+enum BookingStatus {
+  upcoming
+  completed
+  cancelled
+}
+
+enum ApplicationStatus {
+  draft
+  submitted
+  approved
+  rejected
+}
+
+enum MessageFrom {
+  me
+  them
+}
+
+enum Gender {
+  male
+  female
+  nonbinary
+  prefer_not_to_say
+}
+
+// ── User ──────────────────────────────────────────────────────────────────────
+// Mirrors DemoUser (firstName) + QuizResult (name, city, matchedId) and the
+// fields expected from Auth.js OAuth / phone-OTP sign-in.
+
+model User {
+  id          String   @id @default(cuid())
+  // Auth identifiers — at least one must be present
+  phone       String?  @unique
+  email       String?  @unique
+  // Profile
+  firstName   String
+  lastName    String?
+  gender      Gender?
+  city        String?  // matches City.id from lib/data/cities
+  // Onboarding flags (mirrors localStorage keys)
+  welcomed    Boolean  @default(false)
+  unlocked    Boolean  @default(false)  // paid full-unlock
+  // Quiz result — stored inline to avoid a join on every page load
+  quizMatchId String?  // companion id matched by the onboarding quiz
+  // Timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  wallet        Wallet?
+  bookings      Booking[]
+  favorites     Favorite[]
+  sentMessages  Message[]        @relation("SentBy")
+  notifications Notification[]
+  subscription  Subscription?
+  application   CompanionApplication?
+
+  @@index([city])
+  @@map("users")
+}
+
+// ── Wallet + Credit Ledger ────────────────────────────────────────────────────
+// Wallet is 1:1 with User. CreditLedger is an append-only event log so we
+// can reconstruct the balance from history and audit every top-up / spend.
+
+model Wallet {
+  id       String  @id @default(cuid())
+  userId   String  @unique
+  credits  Int     @default(2)  // free starter credits
+  used     Int     @default(0)
+  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ledger   CreditLedger[]
+
+  @@map("wallets")
+}
+
+// kind: "topup" | "spend" | "refund"
+model CreditLedger {
+  id        String   @id @default(cuid())
+  walletId  String
+  delta     Int      // positive = gain, negative = spend
+  kind      String   // topup | spend | refund
+  note      String?  // e.g. "Razorpay order_xxx" or "booking bk_..."
+  createdAt DateTime @default(now())
+  wallet    Wallet   @relation(fields: [walletId], references: [id], onDelete: Cascade)
+
+  @@index([walletId, createdAt])
+  @@map("credit_ledger")
+}
+
+// ── Companion ─────────────────────────────────────────────────────────────────
+// Mirrors the Companion interface from lib/data/companions.ts exactly.
+// reviewsList is stored as Json[] to avoid a full 4-table join on the
+// explore page — denormalised on purpose. Formal reviews come via Booking.review.
+
+model Companion {
+  id             String   @id  // matches lib/data id strings e.g. 'ananya'
+  name           String
+  firstName      String
+  maskedName     String
+  city           String
+  area           String
+  age            Int?
+  activities     String[] // e.g. ['City Walk', 'Café Chat', 'Museum']
+  languages      String[]
+  rating         Float    @default(0)
+  reviewCount    Int      @default(0)  // `reviews` in the TS type
+  ratePerMeeting Int
+  bio            String
+  suggestions    String[] // 3 city-specific outing ideas
+  photo          String   // Unsplash URL
+  accent         String   // hex colour string
+  sameGenderNote Boolean  @default(false)
+  topMatch       Boolean  @default(false)
+  verified       Boolean  @default(false)
+  // Presence + smart-match fields
+  availableNow   Boolean  @default(false)
+  availability   String   @default("Available tomorrow")
+  distanceKm     Float    @default(5)
+  matchScore     Int      @default(70) // 0–100
+  // Denormalised reviews snapshot (Json array of {name,city,stars,text})
+  reviewsList    Json     @default("[]")
+  // Timestamps
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // Relations
+  bookings       Booking[]
+  favorites      Favorite[]
+  messages       Message[]
+
+  @@index([city, availableNow])
+  @@index([city, matchScore])
+  @@map("companions")
+}
+
+// ── Booking ───────────────────────────────────────────────────────────────────
+// Mirrors the Booking interface from lib/appState.ts.
+// review is stored inline as Json to avoid a separate table for v1.
+
+model Booking {
+  id          String        @id @default(cuid())
+  userId      String
+  companionId String
+  activity    String
+  dateISO     String        // e.g. '2026-06-15' — kept as string to match frontend
+  time        String        // display slot e.g. 'Morning · 7–9 AM'
+  place       String
+  status      BookingStatus @default(upcoming)
+  usedCredit  Boolean       @default(false)
+  pricePaid   Int           @default(0) // paise (₹499 = 49900)
+  review      Json?         // { stars: number, text: string } | null
+  // Payment traceability — never lose the tx hash
+  razorpayOrderId   String?
+  razorpayPaymentId String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  user        User          @relation(fields: [userId], references: [id])
+  companion   Companion     @relation(fields: [companionId], references: [id])
+
+  @@index([userId, status])
+  @@index([companionId, dateISO])
+  @@map("bookings")
+}
+
+// ── Subscription / Plus Plan ──────────────────────────────────────────────────
+// Mirrors Plan ('plus' | null) from lib/appState.ts.
+
+model Subscription {
+  id                String    @id @default(cuid())
+  userId            String    @unique
+  plan              String    // 'plus' — extensible for future tiers
+  startsAt          DateTime  @default(now())
+  endsAt            DateTime?
+  razorpaySubId     String?   // Razorpay subscription id for recurring billing
+  user              User      @relation(fields: [userId], references: [id])
+
+  @@map("subscriptions")
+}
+
+// ── Message ───────────────────────────────────────────────────────────────────
+// One thread per (userId, companionId) pair. threadId = userId_companionId.
+// Mirrors ChatMessage from lib/appState.ts.
+
+model Message {
+  id          String      @id @default(cuid())
+  threadId    String      // composite key string for easy lookup
+  userId      String
+  companionId String
+  from        MessageFrom // 'me' | 'them'
+  text        String
+  ts          BigInt      // epoch ms — matches the number in ChatMessage
+  createdAt   DateTime    @default(now())
+
+  user        User        @relation("SentBy", fields: [userId], references: [id])
+  companion   Companion   @relation(fields: [companionId], references: [id])
+
+  @@index([threadId, createdAt])
+  @@map("messages")
+}
+
+// ── Notification ──────────────────────────────────────────────────────────────
+// Mirrors AppNotification from lib/appState.ts.
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  body      String
+  ts        BigInt   // epoch ms
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@index([userId, read])
+  @@map("notifications")
+}
+
+// ── Favorite ──────────────────────────────────────────────────────────────────
+
+model Favorite {
+  userId      String
+  companionId String
+  createdAt   DateTime  @default(now())
+  user        User      @relation(fields: [userId], references: [id])
+  companion   Companion @relation(fields: [companionId], references: [id])
+
+  @@id([userId, companionId])
+  @@map("favorites")
+}
+
+// ── Companion Application ─────────────────────────────────────────────────────
+// Mirrors CompanionApplication from lib/appState.ts. One draft per user.
+
+model CompanionApplication {
+  id                String            @id @default(cuid())
+  userId            String            @unique
+  name              String
+  city              String
+  activities        String[]
+  rate              Int               // ratePerMeeting in paise
+  bio               String
+  idUploaded        Boolean           @default(false)
+  backgroundConsent Boolean           @default(false)
+  status            ApplicationStatus @default(draft)
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  user              User              @relation(fields: [userId], references: [id])
+
+  @@map("companion_applications")
+}
+
+// ── Social layer stubs (future) ───────────────────────────────────────────────
+// Commented out to keep the initial migration small. Uncomment + migrate
+// when the social/lounge feature is scoped.
+
+// model Lounge {
+//   id          String         @id @default(cuid())
+//   name        String         // e.g. "Bandra Wanderers"
+//   city        String
+//   description String?
+//   createdAt   DateTime       @default(now())
+//   messages    LoungeMessage[]
+//
+//   @@index([city])
+//   @@map("lounges")
+// }
+
+// model LoungeMessage {
+//   id        String   @id @default(cuid())
+//   loungeId  String
+//   userId    String
+//   text      String
+//   ts        BigInt
+//   lounge    Lounge   @relation(fields: [loungeId], references: [id])
+//
+//   @@index([loungeId, ts])
+//   @@map("lounge_messages")
+// }
+
+// model Post {
+//   id        String         @id @default(cuid())
+//   userId    String
+//   body      String
+//   imageUrl  String?
+//   ts        BigInt
+//   reactions PostReaction[]
+//
+//   @@index([userId, ts])
+//   @@map("posts")
+// }
+
+// model PostReaction {
+//   postId    String
+//   userId    String
+//   emoji     String   // e.g. "❤️"
+//
+//   @@id([postId, userId, emoji])
+//   @@map("post_reactions")
+// }

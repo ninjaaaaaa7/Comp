@@ -1,0 +1,39 @@
+'use client';
+
+import { useScroll, useSpring, motion, useReducedMotion } from 'framer-motion';
+
+/**
+ * Slim right-side vertical scroll-progress indicator.
+ * Driven by document scroll; spring-smoothed for fine-pointer devices.
+ * Hidden on touch viewports (md breakpoint + up).
+ * Under prefers-reduced-motion the spring is bypassed — still shows progress
+ * but without springy lag.
+ */
+export function ScrollProgressPill() {
+  const { scrollYProgress } = useScroll();
+  const shouldReduce = useReducedMotion();
+  const smoothed = useSpring(scrollYProgress, { stiffness: 180, damping: 28, restDelta: 0.001 });
+
+  return (
+    <div
+      aria-hidden="true"
+      className="fixed right-4 top-1/2 -translate-y-1/2 z-40 pointer-events-none hidden md:flex flex-col items-center"
+    >
+      <div
+        className="relative overflow-hidden rounded-full"
+        style={{ width: 4, height: 96, background: 'rgba(46,107,255,0.14)' }}
+      >
+        <motion.div
+          className="absolute top-0 left-0 right-0 rounded-full"
+          style={{
+            height: '100%',
+            scaleY: shouldReduce ? scrollYProgress : smoothed,
+            transformOrigin: 'top',
+            background: 'var(--grad-aurora)',
+            willChange: 'transform',
+          }}
+        />
+      </div>
+    </div>
+  );
+}

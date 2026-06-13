@@ -1,0 +1,178 @@
+'use client';
+
+import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
+import { DigitRoll } from '@/components/journey/DigitRoll';
+import { CountUp } from '@/components/motion/CountUp';
+import { ParticleField } from '@/components/journey/ParticleField';
+import { CitySelector } from './CitySelector';
+
+interface ExploreHeaderProps {
+  matched: boolean;
+  name?: string;
+  cityName: string;
+  unlockedCount: number;
+  members: number;
+  selectedCityId: string;
+  onCityChange: (id: string) => void;
+  quizDone: boolean;
+  freeNowCount: number;
+}
+
+/**
+ * ExploreHeader — light band atop the explore grid.
+ * Personalised H1 when ?matched=1; city selector; social-proof chip; unlock counter.
+ * Quiz link shown only when quiz not yet done (§ADD item 5).
+ * Spec §4.1 + §1.5 copy voice (platonic, no fake urgency).
+ */
+export function ExploreHeader({
+  matched, name, cityName, unlockedCount,
+  members, selectedCityId, onCityChange, quizDone, freeNowCount,
+}: ExploreHeaderProps) {
+  return (
+    <section
+      className="py-16 md:py-24 relative overflow-hidden"
+      style={{ background: 'var(--grad-hero-bg)' }}
+      aria-labelledby="explore-heading"
+    >
+      {/* Subtle azure particle ambient — reduced-motion handled inside ParticleField */}
+      <ParticleField count={8} color="#2E6BFF" />
+      <div className="max-w-3xl mx-auto px-6">
+
+        {/* Eyebrow + city selector */}
+        <div className="mb-4 flex flex-wrap items-center gap-2">
+          <p
+            className="text-xs font-semibold tracking-widest uppercase"
+            style={{ color: 'var(--color-azure)', fontFamily: 'var(--font-sans)' }}
+          >
+            Explore companions in
+          </p>
+          <CitySelector value={selectedCityId} onChange={onCityChange} />
+        </div>
+
+        {/* H1 — personalised when matched, else default with aurora accent */}
+        {matched ? (
+          <>
+            <h1
+              id="explore-heading"
+              className="mb-3 leading-tight tracking-tight"
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontSize: 'var(--text-h1)',
+                color: 'var(--color-ink)',
+              }}
+            >
+              Your 14 matches in {cityName}{name ? `, ${name}` : ''}.
+            </h1>
+            <p
+              className="mb-6"
+              style={{
+                fontSize: 'var(--text-lead)',
+                color: 'var(--color-ink-muted)',
+                fontFamily: 'var(--font-sans)',
+              }}
+            >
+              Tap anyone to take a closer look.
+            </p>
+          </>
+        ) : (
+          <h1
+            id="explore-heading"
+            className="mb-6 leading-tight tracking-tight"
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: 'var(--text-h1)',
+              color: 'var(--color-ink)',
+            }}
+          >
+            Verified company,{' '}
+            <em
+              className="not-italic"
+              style={{
+                background: 'var(--grad-aurora)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}
+            >
+              near you.
+            </em>
+          </h1>
+        )}
+
+        {/* Social-proof frosted chip — members count from selected city */}
+        <div
+          className="mb-3 flex w-fit items-center gap-2 rounded-pill px-4 py-2"
+          style={{
+            background: 'rgba(255,255,255,0.70)',
+            backdropFilter: 'blur(6px)',
+            WebkitBackdropFilter: 'blur(6px)',
+            border: '1.5px solid rgba(46,107,255,0.15)',
+            boxShadow: 'var(--shadow-1)',
+          }}
+        >
+          <span
+            className="h-2 w-2 shrink-0 rounded-full animate-pulse"
+            style={{ background: 'var(--color-emerald)' }}
+            aria-hidden="true"
+          />
+          <span className="text-sm font-medium" style={{ color: 'var(--color-ink-muted)' }}>
+            {members}+ members · 41 meetups this week
+          </span>
+        </div>
+
+        {/* Free-now live stat */}
+        <div
+          className="mb-5 flex w-fit items-center gap-2 rounded-pill px-4 py-2"
+          style={{
+            background: 'rgba(255,255,255,0.70)',
+            backdropFilter: 'blur(6px)',
+            WebkitBackdropFilter: 'blur(6px)',
+            border: '1.5px solid rgba(31,174,107,0.20)',
+            boxShadow: 'var(--shadow-1)',
+          }}
+        >
+          <span
+            className="h-2 w-2 shrink-0 rounded-full animate-pulse"
+            style={{ background: 'var(--color-emerald)' }}
+            aria-hidden="true"
+          />
+          <span className="text-sm font-medium" style={{ color: 'var(--color-ink-muted)' }}>
+            <span style={{ color: 'var(--color-emerald)', fontWeight: 600 }}>
+              <CountUp value={freeNowCount} />
+            </span>{' '}
+            companions free to meet today
+          </span>
+        </div>
+
+        {/* Unlock counter — aria-live so screen readers announce the 1→14 roll */}
+        <div
+          aria-live="polite"
+          className="mb-5 flex items-center gap-1 text-sm"
+          style={{ color: 'var(--color-ink-muted)', fontFamily: 'var(--font-sans)' }}
+        >
+          <span className="font-semibold" style={{ color: 'var(--color-ink)' }}>
+            <DigitRoll
+              value={unlockedCount}
+              aria-label={String(unlockedCount)}
+              className="text-sm"
+            />
+          </span>
+          <span> of 14 profiles unlocked</span>
+        </div>
+
+        {/* Quiz link — only before quiz is done */}
+        {!quizDone && (
+          <Link
+            href="/quiz"
+            className="inline-flex items-center gap-1.5 text-sm font-medium rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+            style={{ color: 'var(--color-azure-deep)', outlineColor: 'var(--color-azure)' }}
+          >
+            Not sure who to pick? Take the 60-second quiz
+            <ArrowRight size={14} aria-hidden="true" />
+          </Link>
+        )}
+      </div>
+    </section>
+  );
+}
