@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useInView, useReducedMotion } from 'framer-motion';
 
 /**
@@ -36,5 +36,29 @@ export function useRevealInView<T extends Element = HTMLDivElement>(opts: Opts =
   const reduce = useReducedMotion();
   const io = useInView(ref, { once, amount, margin: margin as `${number}px` });
 
-  return { ref, revealed: enabled ? reduce || io : false };
+  // Fail-safe for refresh-into-a-lower-section: if the browser restores scroll so
+  // this element is already on screen at mount, reveal it directly. Without this,
+  // a missed IntersectionObserver callback after scroll restoration can leave the
+  // section stuck at opacity:0 (it flashes in from SSR, then disappears).
+  const [onScreenAtMount, setOnScreenAtMount] = useState(false);
+  useEffect(() => {
+    if (!enabled) return;
+    const check = () => {
+      const el = ref.current;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) setOnScreenAtMount(true);
+    };
+    const raf = requestAnimationFrame(check);
+    // Re-check after scroll restoration, which can land a few hundred ms in.
+    const t1 = setTimeout(check, 300);
+    const t2 = setTimeout(check, 800);
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
+  }, [enabled]);
+
+  return { ref, revealed: enabled ? reduce || io || onScreenAtMount : false };
 }

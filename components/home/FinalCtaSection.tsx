@@ -1,12 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 import { MagneticButton } from "@/components/motion/MagneticButton";
 import { Reveal, RevealGroup } from "@/components/motion/Reveal";
 import { ClipReveal } from "@/components/journey/ClipReveal";
-import { ParticleField } from "@/components/journey/ParticleField";
+
+// Glows + aurora baked into ONE background-image (no filter:blur orbs, no canvas)
+// so the section paints reliably — those composited layers were making the whole
+// background fail to paint (white) on some GPUs.
+const CTA_BG =
+  "radial-gradient(55% 80% at 18% 8%, rgba(122,79,224,0.55), transparent 60%)," +
+  "radial-gradient(50% 75% at 92% 95%, rgba(255,178,62,0.40), transparent 60%)," +
+  "linear-gradient(120deg, #2E6BFF 0%, #7A4FE0 55%, #FFB23E 100%)";
 
 const REASSURANCES = [
   "Free to browse",
@@ -18,26 +24,18 @@ export function FinalCtaSection() {
   return (
     <section
       className="relative py-28 md:py-36 overflow-hidden"
-      // Solid dark fallback UNDER the gradient: if the large gradient layer ever
-      // fails to paint (compositing hiccup with the canvas + blurred orbs above),
-      // the section stays dark instead of flashing white, keeping the white text
-      // and translucent button readable.
-      style={{ backgroundColor: "#2B2160", backgroundImage: "var(--grad-aurora)" }}
+      // Solid dark base + glows/aurora as one background-image. No filter:blur
+      // orbs or canvas, which were causing the whole background to fail to paint
+      // (white) on some GPUs.
+      style={{ backgroundColor: "#2B2160", backgroundImage: CTA_BG }}
       aria-labelledby="cta-heading"
     >
       {/* Overlay for readability */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
-        style={{ background: "rgba(20,18,42,0.35)" }}
+        style={{ background: "rgba(20,18,42,0.32)" }}
       />
-
-      {/* Glowing orbs */}
-      <div aria-hidden="true" className="pointer-events-none absolute -top-24 -left-24 w-80 h-80 rounded-full opacity-30 blur-3xl" style={{ background: "#7A4FE0" }} />
-      <div aria-hidden="true" className="pointer-events-none absolute -bottom-24 -right-24 w-80 h-80 rounded-full opacity-25 blur-3xl" style={{ background: "#FFB23E" }} />
-
-      {/* Warm gold particle drift — behind content, above the gradient */}
-      <ParticleField count={20} />
 
       <div className="relative max-w-3xl mx-auto px-6 text-center">
         <RevealGroup>
