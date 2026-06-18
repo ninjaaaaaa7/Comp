@@ -88,7 +88,7 @@ export function ActivityScene({
   const photoOnLeft = index % 2 !== 0;
   const ink = dark ? 'var(--color-panel-text)' : 'var(--color-ink)';
   const muted = dark ? 'rgba(244,242,255,0.6)' : 'var(--color-ink-muted)';
-  const accent = dark ? 'var(--color-gold)' : 'var(--color-azure)';
+  const accent = dark ? 'var(--color-gold)' : 'var(--color-azure-deep)';
 
   const inner = (
     <div className={cn('flex flex-col md:flex-row h-full', photoOnLeft && 'md:flex-row-reverse')}>

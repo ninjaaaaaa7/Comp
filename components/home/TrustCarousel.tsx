@@ -65,7 +65,7 @@ export function TrustCarousel() {
       <div className="max-w-7xl mx-auto px-6 mb-10">
         <RevealGroup>
           <Reveal>
-            <p className="label-eyebrow mb-3" style={{ color: 'var(--color-azure)' }}>
+            <p className="label-eyebrow mb-3" style={{ color: 'var(--color-azure-deep)' }}>
               Verified community
             </p>
           </Reveal>

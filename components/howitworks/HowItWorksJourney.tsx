@@ -47,7 +47,7 @@ export function HowItWorksJourney() {
         <div className="max-w-3xl mx-auto px-6 text-center">
           <RevealGroup>
             <Reveal>
-              <p className="label-eyebrow mb-4" style={{ color: 'var(--color-azure)' }}>
+              <p className="label-eyebrow mb-4" style={{ color: 'var(--color-azure-deep)' }}>
                 Simple by design
               </p>
             </Reveal>

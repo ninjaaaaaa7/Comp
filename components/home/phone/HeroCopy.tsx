@@ -1,10 +1,7 @@
 import Link from 'next/link';
-import { CheckCircle2 } from 'lucide-react';
 import { MagneticButton } from '@/components/motion/MagneticButton';
 import { RollLink } from '@/components/motion/RollLink';
 import { SpotlightText } from '@/components/home/SpotlightText';
-
-const TRUST_ITEMS = ['ID-verified', 'Background-checked', '₹ held in escrow'] as const;
 
 const HEADLINE_STYLE: React.CSSProperties = {
   fontFamily: 'var(--font-display)',
@@ -57,14 +54,7 @@ export function HeroCopyState0() {
           How it works →
         </Link>
       </div>
-      <div className="flex flex-wrap justify-center gap-x-5 gap-y-2">
-        {TRUST_ITEMS.map((item) => (
-          <span key={item} className="flex items-center gap-1.5 text-sm font-sans" style={{ color: 'var(--color-emerald)' }}>
-            <CheckCircle2 size={14} strokeWidth={2.5} aria-hidden="true" />
-            {item}
-          </span>
-        ))}
-      </div>
+
     </div>
   );
 }

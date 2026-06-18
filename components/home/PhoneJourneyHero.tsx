@@ -10,7 +10,7 @@ import { useIsMobile } from '@/lib/useIsMobile';
 // Light readability veil over the video so the dark hero copy stays legible while
 // the cinematic footage shows through (keeps the site's light/airy aesthetic).
 const SCRIM =
-  'radial-gradient(ellipse 80% 55% at 50% 48%, rgba(251,252,255,0.74) 0%, rgba(251,252,255,0.4) 70%, rgba(251,252,255,0.32) 100%), linear-gradient(180deg, rgba(251,252,255,0.55) 0%, rgba(251,252,255,0.42) 45%, rgba(251,252,255,0.7) 100%)';
+  'radial-gradient(ellipse 80% 55% at 50% 48%, rgba(251,252,255,0.45) 0%, rgba(251,252,255,0.25) 70%, rgba(251,252,255,0.18) 100%), linear-gradient(180deg, rgba(251,252,255,0.38) 0%, rgba(251,252,255,0.25) 45%, rgba(251,252,255,0.20) 100%)';
 
 // Soft white halo behind the dark copy so it stays legible over busy footage.
 const COPY_HALO = '0 1px 18px rgba(251,252,255,0.6)';
@@ -30,7 +30,7 @@ function VideoBackground() {
         aria-hidden="true"
       />
       <div aria-hidden="true" className="absolute inset-0" style={{ zIndex: 10, background: SCRIM }} />
-      <SparkleCluster />
+      
     </>
   );
 }

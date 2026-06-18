@@ -126,7 +126,7 @@ export function StatsSection() {
 
         {/* Reviews */}
         <Reveal>
-          <p className="label-eyebrow mb-10 text-center" style={{ color: "var(--color-azure)" }}>
+          <p className="label-eyebrow mb-10 text-center" style={{ color: "var(--color-azure-deep)" }}>
             What members say
           </p>
         </Reveal>

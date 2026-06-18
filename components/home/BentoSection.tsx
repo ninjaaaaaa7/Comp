@@ -147,7 +147,7 @@ export function BentoSection() {
       <div className="max-w-7xl mx-auto px-6">
         <RevealGroup className="mb-14">
           <Reveal>
-            <p className="label-eyebrow mb-4" style={{ color: 'var(--color-azure)' }}>
+            <p className="label-eyebrow mb-4" style={{ color: 'var(--color-azure-deep)' }}>
               What you can do
             </p>
           </Reveal>

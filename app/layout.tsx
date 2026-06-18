@@ -33,6 +33,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${fraunces.variable} ${plusJakarta.variable} ${lora.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <head>
         {/* Warm up the Spline origin so the desktop bento 3D iframe connects faster. */}

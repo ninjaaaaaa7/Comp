@@ -42,7 +42,7 @@ export function Marquee({ children, speed = 40, reverse = false, className }: Ma
         <span className="flex shrink-0" aria-hidden="true" style={{ gap: '2rem', paddingInlineEnd: '2rem' }}>{children}</span>
       </div>
 
-      <style>{`
+      <style suppressHydrationWarning>{`
         @keyframes companio-marquee {
           from { transform: translateX(0); }
           to   { transform: translateX(-50%); }
