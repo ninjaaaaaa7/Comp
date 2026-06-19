@@ -60,7 +60,7 @@ export function Stamp({
       viewport={{ once: true, amount: 0.6 }}
       className={cn(
         "inline-flex flex-col items-center gap-1.5",
-        "border-2 rounded-lg px-3 py-2.5 select-none",
+        "border-2 rounded-lg px-2.5 py-2 select-none",
         colorCls,
         onClick &&
           "cursor-pointer hover:opacity-80 transition-opacity focus-visible:outline-2"
@@ -74,11 +74,11 @@ export function Stamp({
       }
     >
       <Icon size={22} strokeWidth={1.5} aria-hidden="true" />
-      <span className="font-sans font-bold text-xs tracking-widest uppercase leading-none">
+      <span className="font-sans font-bold text-[10px] tracking-wider uppercase leading-none">
         {label}
       </span>
       {date && (
-        <span className="font-sans text-xs opacity-60 leading-none">{date}</span>
+        <span className="font-sans text-[10px] opacity-60 leading-none">{date}</span>
       )}
     </motion.div>
   );
