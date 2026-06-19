@@ -38,7 +38,7 @@ export function PassportStack({
 }: PassportStackProps) {
   return (
     <div
-      className={cn("flex flex-wrap gap-3", className)}
+      className={cn("flex flex-wrap md:flex-nowrap gap-3", className)}
       role="list"
       aria-label="Verification credentials"
     >
