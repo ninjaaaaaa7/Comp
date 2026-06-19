@@ -35,23 +35,23 @@ function PhotoCard({ src, alt, label, offset }: { src: string; alt: string; labe
 /* Unsplash placeholder photos — happy couples and duos sharing warm platonic moments */
 const PHOTOS = [
   {
-    src: "https://images.unsplash.com/photo-1488161628813-04466f872be2?w=480&q=80",
-    alt: "A happy couple walking together laughing on a city street",
+    src: "/city-walk.jpg",
+    alt: "A couple walking together down a busy neon-lit city street at dusk",
     label: "City Walk",
   },
   {
-    src: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=480&q=80",
-    alt: "A fitness duo working out and laughing together at a gym",
+    src: "/gym-buddy.jpg",
+    alt: "A couple smiling and assisting each other during a workout in the gym",
     label: "Gym Buddy",
   },
   {
-    src: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=480&q=80",
-    alt: "A couple having an animated, happy conversation at a café",
+    src: "/cafe-chat.jpg",
+    alt: "A couple looking at each other warmly and chatting at a café window table",
     label: "Café Chat",
   },
   {
-    src: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=480&q=80",
-    alt: "A couple laughing and enjoying a live music festival together",
+    src: "/live-concert.jpg",
+    alt: "A couple dancing and enjoying a live concert under vibrant stage lights",
     label: "Live Concert",
   },
   {
@@ -60,13 +60,13 @@ const PHOTOS = [
     label: "Hiking Trail",
   },
   {
-    src: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=480&q=80",
-    alt: "A couple chatting warmly and laughing at a social gathering",
+    src: "/rooftop-social.jpg",
+    alt: "A couple smiling and conversing on a balcony with city skyline background",
     label: "Rooftop Social",
   },
   {
-    src: "https://images.unsplash.com/photo-1545987796-200677ee1011?w=480&q=80",
-    alt: "Two people smiling and looking at classical art on a museum tour",
+    src: "/museum-tour.jpg",
+    alt: "A couple standing together and looking at art during a museum tour",
     label: "Museum Tour",
   },
   {
@@ -80,14 +80,9 @@ const PHOTOS = [
     label: "Jam Session",
   },
   {
-    src: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=480&q=80",
-    alt: "A couple sharing snacks and enjoying a movie night together",
+    src: "/movie-night.jpg",
+    alt: "A couple eating popcorn and enjoying a movie night together in a cinema",
     label: "Movie Night",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1610890716171-6b1bb98ffd09?w=480&q=80",
-    alt: "Two friends smiling and laughing over a board game night",
-    label: "Game Night",
   },
   {
     src: "https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=480&q=80",
@@ -95,28 +90,28 @@ const PHOTOS = [
     label: "Cycling",
   },
   {
-    src: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=480&q=80",
-    alt: "A couple having fun and splashing water at the beach",
+    src: "/swim-sport.jpg",
+    alt: "A couple swimming and snorkeling together underwater in clear blue water",
     label: "Swim & Sport",
   },
   {
-    src: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=480&q=80",
-    alt: "A couple celebrating happily at a sports game day",
+    src: "/game-day.jpg",
+    alt: "Two friends playing console video games together with controllers",
     label: "Game Day",
   },
   {
-    src: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=480&q=80",
-    alt: "A couple painting together at a creative art class",
+    src: "/arts-crafts.jpg",
+    alt: "A couple smiling and shaping clay pottery together at a table",
     label: "Art & Crafts",
   },
   {
-    src: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=480&q=80",
-    alt: "A couple sitting outside their tent during a weekend camping trip",
+    src: "/weekend-camping.jpg",
+    alt: "A couple making coffee together inside their camping tent",
     label: "Weekend Camping",
   },
   {
-    src: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=480&q=80",
-    alt: "A couple walking closely and laughing in the city",
+    src: "/city-hangout.jpg",
+    alt: "A couple walking arm-in-arm down a city sidewalk",
     label: "City Hangout",
   },
   {
