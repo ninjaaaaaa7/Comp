@@ -48,10 +48,10 @@ interface Block {
 const BLOCKS: Block[] = [
   {
     id: 'scene-2',
-    src: '/lottie/scene-2.json',
+    src: '/lottie/explore-scene.json',
     caption: 'City energy',
-    lottieW: 480,
-    lottieH: 290,
+    lottieW: 340,
+    lottieH: 340,
     // 2 cols × 2 rows on lg; full width on md
     gridClass: 'lg:col-start-1 lg:col-span-2 lg:row-start-1 lg:row-span-2 md:col-span-2',
     bg: 'linear-gradient(145deg, rgba(46,107,255,0.20) 0%, rgba(46,107,255,0.07) 100%)',

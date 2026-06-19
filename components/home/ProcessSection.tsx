@@ -100,7 +100,7 @@ export function ProcessSection() {
       <div className="max-w-7xl mx-auto px-6">
         <RevealGroup className="mb-16">
           <Reveal>
-            <p className="label-eyebrow mb-4" style={{ color: "var(--color-azure)" }}>
+            <p className="label-eyebrow mb-4" style={{ color: "var(--color-azure-deep)" }}>
               How it works
             </p>
           </Reveal>

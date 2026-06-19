@@ -91,7 +91,7 @@ export default function BecomeACompanionPage() {
         <section className="py-20 md:py-28" style={{ background: "var(--color-bg)" }} aria-labelledby="benefits-heading">
           <div className="max-w-5xl mx-auto px-6">
             <div className="text-center mb-14">
-              <p className="label-eyebrow mb-4" style={{ color: "var(--color-azure)" }}>Why companions choose us</p>
+              <p className="label-eyebrow mb-4" style={{ color: "var(--color-azure-deep)" }}>Why companions choose us</p>
               <h2 id="benefits-heading" className="font-display text-h2 leading-tight tracking-tight" style={{ color: "var(--color-ink)" }}>
                 Built for companions, not just members.
               </h2>
@@ -117,7 +117,7 @@ export default function BecomeACompanionPage() {
         <section className="py-20" style={{ background: "var(--color-azure-tint)" }} aria-labelledby="calc-heading">
           <div className="max-w-2xl mx-auto px-6">
             <div className="text-center mb-10">
-              <p className="label-eyebrow mb-3" style={{ color: "var(--color-azure)" }}>Earning potential</p>
+              <p className="label-eyebrow mb-3" style={{ color: "var(--color-azure-deep)" }}>Earning potential</p>
               <h2 id="calc-heading" className="font-display text-h2 leading-tight tracking-tight" style={{ color: "var(--color-ink)" }}>
                 See what you could earn
               </h2>
@@ -130,7 +130,7 @@ export default function BecomeACompanionPage() {
         <section className="py-20 md:py-28" style={{ background: "var(--color-bg)" }} aria-labelledby="how-heading">
           <div className="max-w-5xl mx-auto px-6">
             <div className="text-center mb-12">
-              <p className="label-eyebrow mb-3" style={{ color: "var(--color-azure)" }}>Getting started</p>
+              <p className="label-eyebrow mb-3" style={{ color: "var(--color-azure-deep)" }}>Getting started</p>
               <h2 id="how-heading" className="font-display text-h2 leading-tight tracking-tight" style={{ color: "var(--color-ink)" }}>
                 From application to first booking
               </h2>

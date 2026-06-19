@@ -33,7 +33,7 @@ export default function CompanionDashboardPage() {
           {/* Header */}
           <div className="flex items-center justify-between gap-4 mb-8 flex-wrap">
             <div>
-              <p className="label-eyebrow mb-1" style={{ color: 'var(--color-azure)' }}>
+              <p className="label-eyebrow mb-1" style={{ color: 'var(--color-azure-deep)' }}>
                 Companion dashboard
               </p>
               <h1 className="font-display text-h2 leading-tight" style={{ color: 'var(--color-ink)' }}>

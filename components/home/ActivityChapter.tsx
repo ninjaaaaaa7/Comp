@@ -33,7 +33,7 @@ const ACCENT_STYLE: React.CSSProperties = {
 /** Intro heading lives inside scene 0's text column in both modes. */
 const IntroHeading = () => (
   <div style={{ marginBottom: '1.75rem' }}>
-    <p className="label-eyebrow mb-2" style={{ color: 'var(--color-gold)' }}>One day, with company</p>
+    <p className="label-eyebrow mb-2" style={{ color: 'var(--color-violet)' }}>One day, with company</p>
     <ClipReveal
       as="h2"
       id="activity-heading"

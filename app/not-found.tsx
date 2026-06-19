@@ -22,7 +22,7 @@ export default function NotFound() {
               <Compass size={32} strokeWidth={1.5} />
             </span>
 
-            <p className="label-eyebrow mb-3" style={{ color: "var(--color-azure)" }}>
+            <p className="label-eyebrow mb-3" style={{ color: "var(--color-azure-deep)" }}>
               Page not found
             </p>
             <h1

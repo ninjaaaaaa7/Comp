@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import {
-  CheckCircle2,
   MapPin,
   Dumbbell,
   Coffee,
@@ -13,12 +12,6 @@ import {
 } from "lucide-react";
 import { MagneticButton } from "@/components/motion/MagneticButton";
 import { spring, durations } from "@/lib/motion";
-
-const TRUST_ITEMS = [
-  "ID-verified",
-  "Background-checked",
-  "₹ held in escrow",
-] as const;
 
 const ACTIVITY_CARDS = [
   { icon: MapPin,    label: "City Walk",    detail: "Mumbai · 2 hrs",    color: "#2E6BFF", bg: "#EBF1FF", col: "left" },
@@ -169,12 +162,6 @@ export function HeroSection() {
             animate={{ opacity: 1 }}
             transition={{ duration: durations.slow, delay: 0.56 }}
           >
-            {TRUST_ITEMS.map((item) => (
-              <span key={item} className="flex items-center gap-1.5 text-sm font-sans" style={{ color: "var(--color-emerald)" }}>
-                <CheckCircle2 size={14} strokeWidth={2.5} aria-hidden="true" />
-                {item}
-              </span>
-            ))}
             <span className="flex items-center gap-1.5 text-sm font-sans" style={{ color: "var(--color-emerald)" }}>
               <span className="relative flex h-2 w-2" aria-hidden="true">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60" style={{ background: "var(--color-emerald)" }} />
