@@ -22,7 +22,7 @@ import { ClipReveal } from '@/components/journey/ClipReveal';
 const CARDS = [
   {
     id: 'city-guide',
-    num: '01',
+    num: '',
     label: 'City Guide',
     tagline: 'Explore your city with a local who loves it.',
     icon: Map,
@@ -33,7 +33,7 @@ const CARDS = [
   },
   {
     id: 'gym-running',
-    num: '02',
+    num: '',
     label: 'Gym & Running',
     tagline: 'A partner who shows up.',
     icon: Dumbbell,
@@ -44,7 +44,7 @@ const CARDS = [
   },
   {
     id: 'events',
-    num: '03',
+    num: '',
     label: 'Events',
     tagline: 'Nobody goes alone.',
     icon: Calendar,
@@ -55,7 +55,7 @@ const CARDS = [
   },
   {
     id: 'cafe-chat',
-    num: '04',
+    num: '',
     label: 'Café & Conversation',
     tagline: 'Great coffee, better company.',
     icon: Coffee,
@@ -66,7 +66,7 @@ const CARDS = [
   },
   {
     id: 'elder-company',
-    num: '05',
+    num: '',
     label: 'Elder Company',
     tagline: 'Warm, patient presence for older adults.',
     icon: Heart,
@@ -77,7 +77,7 @@ const CARDS = [
   },
   {
     id: 'city-help',
-    num: '06',
+    num: '',
     label: 'City Help',
     tagline: 'Navigate errands & new neighbourhoods.',
     icon: Users,

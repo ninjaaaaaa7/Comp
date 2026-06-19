@@ -11,7 +11,7 @@ import type { Companion } from '@/lib/data/companions';
 function Chip({ children }: { children: React.ReactNode }) {
   return (
     <span
-      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-pill text-xs font-medium bg-white/60 backdrop-blur-sm text-ink"
+      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-pill text-xs font-medium bg-white/90 text-ink"
       style={{ border: '1.5px solid rgba(46,107,255,0.2)' }}
     >
       {children}
@@ -52,7 +52,11 @@ export function BlurLockCard({
             fill
             sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, (max-width:1280px) 33vw, 25vw"
             className="object-cover"
-            style={{ filter: 'blur(18px) saturate(1.05)', transform: 'scale(1.06)' }}
+            style={{
+              filter: 'blur(8px) saturate(1.05)',
+              transform: 'scale(1.06) translateZ(0)',
+              WebkitTransform: 'scale(1.06) translateZ(0)',
+            }}
           />
 
           {/* 2.4s diagonal shimmer sweep — CSS animation instead of framer-motion
@@ -74,7 +78,7 @@ export function BlurLockCard({
           {/* Frosted lock chip — scales 1.05 when card is hovered (variant propagation) */}
           <div className="absolute inset-0 flex items-center justify-center">
             <motion.div
-              className="flex items-center gap-1.5 px-3 py-2 rounded-pill text-sm font-medium bg-white/70 backdrop-blur-md text-ink"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-pill text-sm font-medium bg-white/92 text-ink"
               style={{ border: '1.5px solid rgba(46,107,255,0.3)' }}
               variants={{ hovered: { scale: shouldReduce ? 1 : 1.05 } }}
               transition={spring.snappy}
