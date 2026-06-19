@@ -32,96 +32,96 @@ function PhotoCard({ src, alt, label, offset }: { src: string; alt: string; labe
   );
 }
 
-/* Unsplash placeholder photos — platonic activity moments only */
+/* Unsplash placeholder photos — happy couples and duos sharing warm platonic moments */
 const PHOTOS = [
   {
-    src: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=480&q=80",
-    alt: "Group of friends laughing together on a city street",
+    src: "https://images.unsplash.com/photo-1488161628813-04466f872be2?w=480&q=80",
+    alt: "A happy couple walking together laughing on a city street",
     label: "City Walk",
   },
   {
-    src: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=480&q=80",
-    alt: "Two people working out together at a gym",
+    src: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=480&q=80",
+    alt: "A fitness duo working out and laughing together at a gym",
     label: "Gym Buddy",
   },
   {
-    src: "https://images.unsplash.com/photo-1543269865-cbf427effbad?w=480&q=80",
-    alt: "Two friends having an animated conversation at a café",
+    src: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=480&q=80",
+    alt: "A couple having an animated, happy conversation at a café",
     label: "Café Chat",
   },
   {
-    src: "https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=480&q=80",
-    alt: "Friends enjoying a live music concert together",
+    src: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=480&q=80",
+    alt: "A couple laughing and enjoying a live music festival together",
     label: "Live Concert",
   },
   {
-    src: "https://images.unsplash.com/photo-1501555088652-021faa106b9b?w=480&q=80",
-    alt: "Group of people hiking a trail together",
+    src: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=480&q=80",
+    alt: "A happy duo looking out at mountain peaks on a hiking trail",
     label: "Hiking Trail",
   },
   {
-    src: "https://images.unsplash.com/photo-1523301343968-6a6ebf63c672?w=480&q=80",
-    alt: "Friends socialising at a rooftop gathering",
+    src: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=480&q=80",
+    alt: "A couple chatting warmly and laughing at a social gathering",
     label: "Rooftop Social",
   },
   {
-    src: "https://images.unsplash.com/photo-1554907984-15263bfd63bd?w=480&q=80",
-    alt: "A gallery wall of classical paintings at an art museum",
+    src: "https://images.unsplash.com/photo-1545987796-200677ee1011?w=480&q=80",
+    alt: "Two people smiling and looking at classical art on a museum tour",
     label: "Museum Tour",
   },
   {
     src: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=480&q=80",
-    alt: "Two friends cooking a meal together in a home kitchen",
+    alt: "A couple laughing and cooking a meal together in the kitchen",
     label: "Cooking Together",
   },
   {
-    src: "https://images.unsplash.com/photo-1471478331149-c72f17e33c73?w=480&q=80",
-    alt: "Person playing an acoustic guitar",
+    src: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=480&q=80",
+    alt: "Two people smiling and playing music together during a jam session",
     label: "Jam Session",
   },
   {
     src: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=480&q=80",
-    alt: "A full cinema audience watching a film together",
+    alt: "A couple sharing snacks and enjoying a movie night together",
     label: "Movie Night",
   },
   {
     src: "https://images.unsplash.com/photo-1610890716171-6b1bb98ffd09?w=480&q=80",
-    alt: "A board game mid-play on a table",
+    alt: "Two friends smiling and laughing over a board game night",
     label: "Game Night",
   },
   {
-    src: "https://images.unsplash.com/photo-1571188654248-7a89213915f7?w=480&q=80",
-    alt: "A cyclist riding a scenic mountain road",
+    src: "https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=480&q=80",
+    alt: "A couple smiling while cycling side-by-side on a scenic road",
     label: "Cycling",
   },
   {
-    src: "https://images.unsplash.com/photo-1530549387789-4c1017266635?w=480&q=80",
-    alt: "A swimmer doing laps in a pool",
+    src: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=480&q=80",
+    alt: "A couple having fun and splashing water at the beach",
     label: "Swim & Sport",
   },
   {
-    src: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=480&q=80",
-    alt: "A basketball dropping through the hoop at a game",
+    src: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=480&q=80",
+    alt: "A couple celebrating happily at a sports game day",
     label: "Game Day",
   },
   {
     src: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=480&q=80",
-    alt: "Paintbrushes and colours on a canvas at an art session",
+    alt: "A couple painting together at a creative art class",
     label: "Art & Crafts",
   },
   {
     src: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=480&q=80",
-    alt: "A weekend campsite tent looking out onto a forest",
+    alt: "A couple sitting outside their tent during a weekend camping trip",
     label: "Weekend Camping",
   },
   {
-    src: "https://images.unsplash.com/photo-1543807535-eceef0bc6599?w=480&q=80",
-    alt: "Three friends laughing together on a city street",
+    src: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=480&q=80",
+    alt: "A couple walking closely and laughing in the city",
     label: "City Hangout",
   },
   {
     src: "https://images.unsplash.com/photo-1506869640319-fe1a24fd76dc?w=480&q=80",
-    alt: "A group of friends celebrating on a hilltop at sunset",
+    alt: "A couple celebrating together on a peak at sunset",
     label: "Sunset Trek",
   },
 ] as const;
