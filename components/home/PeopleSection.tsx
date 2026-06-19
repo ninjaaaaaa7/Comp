@@ -75,8 +75,8 @@ const PHOTOS = [
     label: "Cooking Together",
   },
   {
-    src: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=480&q=80",
-    alt: "Two people smiling and playing music together during a jam session",
+    src: "/jam-session.jpg",
+    alt: "A couple smiling and playing acoustic guitar together during a jam session",
     label: "Jam Session",
   },
   {
