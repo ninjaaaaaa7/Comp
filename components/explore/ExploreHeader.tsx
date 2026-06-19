@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { DigitRoll } from '@/components/journey/DigitRoll';
 import { CountUp } from '@/components/motion/CountUp';
-import { ParticleField } from '@/components/journey/ParticleField';
 import { CitySelector } from './CitySelector';
 
 interface ExploreHeaderProps {
@@ -35,8 +34,6 @@ export function ExploreHeader({
       style={{ background: 'var(--grad-hero-bg)' }}
       aria-labelledby="explore-heading"
     >
-      {/* Subtle azure particle ambient — reduced-motion handled inside ParticleField */}
-      <ParticleField count={8} color="#2E6BFF" />
       <div className="max-w-3xl mx-auto px-6">
 
         {/* Eyebrow + city selector */}
@@ -104,9 +101,7 @@ export function ExploreHeader({
         <div
           className="mb-3 flex w-fit items-center gap-2 rounded-pill px-4 py-2"
           style={{
-            background: 'rgba(255,255,255,0.70)',
-            backdropFilter: 'blur(6px)',
-            WebkitBackdropFilter: 'blur(6px)',
+            background: 'rgba(255,255,255,0.92)',
             border: '1.5px solid rgba(46,107,255,0.15)',
             boxShadow: 'var(--shadow-1)',
           }}
@@ -125,9 +120,7 @@ export function ExploreHeader({
         <div
           className="mb-5 flex w-fit items-center gap-2 rounded-pill px-4 py-2"
           style={{
-            background: 'rgba(255,255,255,0.70)',
-            backdropFilter: 'blur(6px)',
-            WebkitBackdropFilter: 'blur(6px)',
+            background: 'rgba(255,255,255,0.92)',
             border: '1.5px solid rgba(31,174,107,0.20)',
             boxShadow: 'var(--shadow-1)',
           }}

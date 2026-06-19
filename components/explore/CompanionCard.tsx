@@ -51,7 +51,7 @@ function Chip({
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1 px-2.5 py-1 rounded-pill text-xs font-medium bg-white/60 backdrop-blur-sm text-ink',
+        'inline-flex items-center gap-1 px-2.5 py-1 rounded-pill text-xs font-medium bg-white/90 text-ink',
         className,
       )}
       style={{ border: '1.5px solid rgba(46,107,255,0.2)', ...style }}
@@ -118,8 +118,8 @@ export const CompanionCard = memo(function CompanionCard({
             className="absolute top-2 left-2 px-2.5 py-1 rounded-pill text-xs font-semibold"
             style={
               isNew(companion)
-                ? { background: 'rgba(122,79,224,0.88)', color: '#fff', backdropFilter: 'blur(4px)' }
-                : { background: 'rgba(255,178,62,0.92)', color: '#141A2E', backdropFilter: 'blur(4px)' }
+                ? { background: '#7A4FE0', color: '#fff' }
+                : { background: '#FFB23E', color: '#141A2E' }
             }
           >
             {isNew(companion) ? 'New this week' : 'Popular'}
@@ -192,8 +192,7 @@ export const CompanionCard = memo(function CompanionCard({
             <span
               className="px-2 py-0.5 rounded-pill text-xs font-medium"
               style={{
-                background: 'rgba(255,255,255,0.85)',
-                backdropFilter: 'blur(8px)',
+                background: 'rgba(255,255,255,0.95)',
                 border: companion.availableNow
                   ? '1px solid rgba(31,174,107,0.35)'
                   : '1px solid rgba(46,107,255,0.18)',
